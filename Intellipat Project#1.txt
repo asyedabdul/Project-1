@@ -22,10 +22,10 @@ STEP1: Createing 3 VMs installing Ansible and making them in Ansible Cluster
 	$sudo nano authorized_keys (paste it under and save and exit)
 - In master VM go to following
 	$ cd /etc/ansible/hosts (enter hosts valus as below then save and exit)
-	[test1]
+	[test]
 	172.31.84.72
 
-	[prod1]
+	[prod]
 	172.31.80.215
 - from master vm ping all to make sure they are pingable with following
 	$ ansible -m ping all you should get SUCCESS.
