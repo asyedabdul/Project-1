@@ -77,9 +77,9 @@ sudo apt-get install docker.io -y
 - run following --syntax-check command to check any syntax erros in install.YAML file
 	$ansible-playbook install.YAML --syntax-check
 - run dry run without installing first with following command on master VM
-	$ansible-playbook install.YAML --check
+	$ ansible-playbook install.YAML --check
 - if both above passed then run the actual install with following command
-	@ansible-playbook install.YAML
+	@ ansible-playbook install.YAML
 	------------------------------------------
 - Check Versions of jenkins, Java and docker on master VM and java, docker versions on test and prod VMs.
 	$ jenkins --version
@@ -87,7 +87,10 @@ sudo apt-get install docker.io -y
 	$ docker --version
 	
 - Open Jenkins dashboard using master VM public ip:8080 port number in your browser and copy location of the password and grab the password from 
-  master VM and login to jenkins dashboard. If you have any issues opening Jenkins dashboard some troubleshoot below
+  master VM and login to jenkins dashboard. 
+$ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+If you have any issues opening Jenkins dashboard some troubleshoot below
   
   $ sudo apt update
   $ sudo apt install openjdk-17-jdk -y (install java openjdk-17-jdk)
