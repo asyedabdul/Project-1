@@ -1,4 +1,5 @@
-Intellipat Capstone project1 (check automatic trigger of pipelines when you make some change in your git repo add file and trigger webhook)
+Project1 (check automatic trigger of pipelines when you make some change in your git repo add file and trigger webhook)
+
 STEP1: Createing 3 VMs installing Ansible and making them in Ansible Cluster
 
 - Created 3 EC2 VMs in AWS master, test, prod
