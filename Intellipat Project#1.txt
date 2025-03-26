@@ -113,9 +113,9 @@ EC2 instance in and go to security tab to allow tcp 8080 for 0.0.0.0/0 for all i
 ########################################################################################################################
 STEP3: Add both test and prod nodes into Jenkins
 Note: use internal ips of the servers while adding nodes in Jenkins console. open tcp port 8080 for these EC2 in AWS.
-
-
-##############################################################################################
+Remote Root Directory Path is : /var/jenkins_home/workspace
+#############
+#################################################################################
 STEP4: Clone Git repo with master to have website files from git. Git repo address: https://github.com/asyedabdul/website
 
 Login to master EC2 and run following
