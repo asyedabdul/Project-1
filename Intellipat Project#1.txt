@@ -10,7 +10,7 @@ STEP1: Createing 3 VMs installing Ansible and making them in Ansible Cluster
 	$ sudo apt install software-properties-common
 	$ sudo add-apt-repository --yes --update ppa:ansible/ansible
 	$ sudo apt install ansible
-- Checked Ansible version with $ansible --version
+- Checked Ansible version with $ ansible --version
 - Generated pub key with command $ ssh-keygen   OR  ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa
 - cat to .pub location from above to get pub keyvalue
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCp5arRE7VvzabnX8OOaE72VT0erFN2INIiRDSsvqJ2dB50h9lSzxB3oCiN/
@@ -30,13 +30,14 @@ STEP1: Createing 3 VMs installing Ansible and making them in Ansible Cluster
 	172.31.80.215
 - from master vm ping all to make sure they are pingable with following
 	$ ansible -m ping all you should get SUCCESS.
-	
+
+NOTE: create the ssh-keygen as default without  giving any filenames at the time of creation of pub keys so that it goes to default  "/home/ubuntu/.ssh" folder.
 ##################################################################################################################################
 STEP2: Install Jenkins, Java, Docker in Master & Install Java , Docker in Test and Prod EC2. for this to accomplish
 Creating install.YAML file, Jenkins.sh , docker.sh files to install Jenkins, Java, Docker in master & Java,Docker in Test and Prod VMs. 
 
 - on master VM do
-	$ sudo nano install.YAML and enter following.
+	$ sudo nano install.yaml and enter following.
 ---
 - hosts: localhost
   become: true
@@ -76,11 +77,11 @@ sudo apt-get install openjdk-17-jdk -y
 sudo apt-get install docker.io -y
 	---------------------------------------
 - run following --syntax-check command to check any syntax erros in install.YAML file
-	$ansible-playbook install.YAML --syntax-check
+	$ ansible-playbook install.yaml --syntax-check
 - run dry run without installing first with following command on master VM
-	$ ansible-playbook install.YAML --check
+	$ ansible-playbook install.yaml --check
 - if both above passed then run the actual install with following command
-	@ ansible-playbook install.YAML
+	@ ansible-playbook install.yaml
 	------------------------------------------
 - Check Versions of jenkins, Java and docker on master VM and java, docker versions on test and prod VMs.
 	$ jenkins --version
@@ -112,11 +113,23 @@ NOTE: I had an issue with opening jenkins dashboard then I added above in jenkin
 EC2 instance in and go to security tab to allow tcp 8080 for 0.0.0.0/0 for all inbout connections. 
 
 ########################################################################################################################
-STEP3: Add both test and prod nodes into Jenkins
+STEP3: Configuring Jenkins - Adding both test and prod nodes into Jenkins
 Note: use internal ips of the servers while adding nodes in Jenkins console. open tcp port 8080 for these EC2 in AWS.
-Remote Root Directory Path is : /var/jenkins_home/workspace
-#############
-#################################################################################
+Managed Jenkins -> Nodes ->  give name of node server you want to add.
+Remote Root Directory Path is : /home/ubuntu/jenkins   - this is where jenkins files are stored on this node server.
+Launch Method: Launch agents via SSH
+Host: private IP address of node server
+Host Key Verification Strategy: Non verifying verification strategy
+Create Credentials: add credentials jenkins
+                   	  Kind: SSH username with private key
+		    	 username: username of slave machine do whoami get username "ubuntu" 
+			Private Key: copy and paste .pem file contents into the box below.
+			
+			
+
+
+
+##############################################################################################
 STEP4: Clone Git repo with master to have website files from git. Git repo address: https://github.com/asyedabdul/website
 
 Login to master EC2 and run following
