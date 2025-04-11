@@ -13,13 +13,15 @@ STEP1: Createing 3 VMs installing Ansible and making them in Ansible Cluster
 - Checked Ansible version with $ ansible --version
 - Generated pub key with command $ ssh-keygen   OR  ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa
 - cat to .pub location from above to get pub keyvalue
+
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCp5arRE7VvzabnX8OOaE72VT0erFN2INIiRDSsvqJ2dB50h9lSzxB3oCiN/
 	dGol8mb89iNDHsSEQZS3lSUTq4/2CI+S2l2pV1DHbMOhKa8xmpajGmFzhbY9rPHeJzNKuxKQImlACpRzclstpSRxOUZGRWoE8tloUvXNYvwkkKYU7N+
 	SCsG4qsLBg7zCgzHbJrkvcUEYeHxUJ5KYtdWpJb/hOrWJt3gwXgMutiKUdCaq33AIRL2AN825dZuNFuxFaYACsGTO80NsiSPBXsxBQ/9PA1z9WPebYdZFfeJSs8jrxep78/
 	Zr+9yqytGoho4L36svWcG0V0NvAkjGjYQsL3TpZXRgQTZpK7Sg2dHV+kJIU1+U6JaTj2XuFBMUykLOiNIScIarKtC95ebF0NTqB/CCtbWXkLOWw3DWEPhQd6QDfvjvlk/TUDtS/
 	AwUQfNAJrTf5c+BxFmimYhEhtw1e2i2JPuL6aEtLrGOyTNuqK8PTawCnyGvkypU06RHfqSN50= ubuntu@ip-172-31-16-186
+
 - Copy pub key and go to test, prod VMs and type in 
-	$ cd .ssh and do 
+	$ cd .ssh
 	$sudo nano authorized_keys (paste it under and save and exit)
 - In master VM go to following
 	$ cd /etc/ansible/hosts (enter hosts valus as below then save and exit)
@@ -29,7 +31,7 @@ STEP1: Createing 3 VMs installing Ansible and making them in Ansible Cluster
 	[prod]
 	172.31.80.215
 - from master vm ping all to make sure they are pingable with following
-	$ ansible -m ping all you should get SUCCESS.
+	$ ansible -m ping all (# you should get SUCCESS)
 
 NOTE: create the ssh-keygen as default without  giving any filenames at the time of creation of pub keys so that it goes to default  "/home/ubuntu/.ssh" folder.
 ##################################################################################################################################
@@ -37,7 +39,9 @@ STEP2: Install Jenkins, Java, Docker in Master & Install Java , Docker in Test a
 Creating install.YAML file, Jenkins.sh , docker.sh files to install Jenkins, Java, Docker in master & Java,Docker in Test and Prod VMs. 
 
 - on master VM do
-	$ sudo nano install.yaml and enter following.
+NOTE: Build the following files on master vm and inside /etc/ansible folder.
+
+	$ sudo nano install.yaml (#and enter following)
 ---
 - hosts: localhost
   become: true
@@ -58,7 +62,7 @@ Creating install.YAML file, Jenkins.sh , docker.sh files to install Jenkins, Jav
   - name: prod task
     script: docker.sh
 	--------------------------
-	$ sudo nano jenkins.sh and enter following
+	$ sudo nano jenkins.sh (#and enter following)
 	
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
 https://pkg.jenkins.io/debian/jenkins.io-2023.key
@@ -70,7 +74,7 @@ sudo apt-get install openjdk-17-jdk -y
 sudo apt-get install docker.io -y
 sudo apt-get install jenkins -y
 	-----------------------------------
-	$sudo nano docker.sh and enter following
+	$ sudo nano docker.sh (#and enter following)
 	
 sudo apt-get update
 sudo apt-get install openjdk-17-jdk -y
@@ -88,10 +92,11 @@ sudo apt-get install docker.io -y
 	$ java --version
 	$ docker --version
 	
-- Open Jenkins dashboard using master VM public ip:8080 port number in your browser and copy location of the password and grab the password from 
-  master VM and login to jenkins dashboard. 
-$ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+- Open Jenkins dashboard using master VM public ip:8080 port like mastervmpublicip:8080  (open this port on security group for master vm before doing this)
+	$ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
+
+################################################################################################################################
 If you have any issues opening Jenkins dashboard some troubleshoot below
   
   $ sudo apt update
@@ -115,15 +120,17 @@ EC2 instance in and go to security tab to allow tcp 8080 for 0.0.0.0/0 for all i
 ########################################################################################################################
 STEP3: Configuring Jenkins - Adding both test and prod nodes into Jenkins
 Note: use internal ips of the servers while adding nodes in Jenkins console. open tcp port 8080 for these EC2 in AWS.
-Managed Jenkins -> Nodes ->  give name of node server you want to add.
-Remote Root Directory Path is : /home/ubuntu/jenkins   - this is where jenkins files are stored on this node server.
-Launch Method: Launch agents via SSH
-Host: private IP address of node server
-Host Key Verification Strategy: Non verifying verification strategy
-Create Credentials: add credentials jenkins
+
+1) Login to Jenkins and Go to Managed Jenkins -> Nodes ->  give name of node server you want to add.
+2) Remote Root Directory Path is : /home/ubuntu/jenkins   - this is where jenkins files are stored on this node server.
+3) Launch Method: Launch agents via SSH
+4) Host: private IP address of node server
+5) Host Key Verification Strategy: Non verifying verification strategy
+6) Create Credentials: add credentials jenkins
                    	  Kind: SSH username with private key
 		    	 username: username of slave machine do whoami get username "ubuntu" 
 			Private Key: copy and paste .pem file contents into the box below.
+     note: select credentials in dropdown once created. 
 			
 			
 
