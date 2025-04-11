@@ -133,12 +133,18 @@ Note: use internal ips of the servers while adding nodes in Jenkins console. ope
      note: select credentials in dropdown once created. 
 			
 ##############################################################################################
-PIPELINE creation Work Flow 
+STEP4: Create new Git Repo
+1) login to Git hub account and create new repo with two branches main and develop.
+2) create a txt file with name main.txt with text "This is main.txt created for main branch"
+2) Create a txt file with name develop.txt with text "This is develop.txt created in develop branch"
+
+LEARN ABOUT MERGING DEVELOP AND MAIN BRANCHES AS NEEDED AT LATER SECTIONS.
+#############################################################################################
+STEP5: PIPELINE creation Work Flow 
 job1 -> test -> fetch from develop branch
 job2 -> prod -> fetch from master branch
 job3 -> j1 trigger j2
 -------------------------------------------
-
 Job creation workflow
 1) New Item create enter job1 (freestyle project)
 2) Restrict where this project to run on dev vm
@@ -147,21 +153,31 @@ Job creation workflow
 5) then save and build the job
 if build successful my vm gets new folder with jenkins/workspace/job1 name which has files respective to my particular job
 
-Github hook trigger - enable to get triggers enabled for webhook
+-- CREATING WEBHOOK
+NOTE: Github hook trigger - enable to get triggers enabled for webhook
 then in repo go to webhooks payload URL : your jenkins url:8080/github-webhook/  (Add webhook)
 
 #####################################################################################################
 
-STEP4: Clone Git repo with master to have website files from git. Git repo address: https://github.com/asyedabdul/website
+
+
+
+
+
+
+
+
+
+
+
+STEP6: ADVANCE TOPICS (GIT,Docker,Container)
+Clone Git repo with master to have website files from git. Git repo address: https://github.com/asyedabdul/website
 
 Login to master EC2 and run following
 	$ sudo git clone https://github.com/asyedabdul/website
 	
-	
 
-
-###############################################################################################
-STEP5: Create following "Dockerfile" on master VM (at git location) and create two pipelines one Run test and one pipeline in prod.
+Create following "Dockerfile" on master VM (at git location) and create two pipelines one Run test and one pipeline in prod.
    
        $sudo nano Dockerfile
 FROM ubuntu
