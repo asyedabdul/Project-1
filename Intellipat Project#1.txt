@@ -97,7 +97,7 @@ sudo apt-get install docker.io -y
 
 
 ################################################################################################################################
-If you have any issues opening Jenkins dashboard some troubleshoot below
+NOTE: If you have any issues opening Jenkins dashboard some troubleshoot below or else NOT needed.
   
   $ sudo apt update
   $ sudo apt install openjdk-17-jdk -y (install java openjdk-17-jdk)
@@ -132,11 +132,26 @@ Note: use internal ips of the servers while adding nodes in Jenkins console. ope
 			Private Key: copy and paste .pem file contents into the box below.
      note: select credentials in dropdown once created. 
 			
-			
-
-
-
 ##############################################################################################
+PIPELINE creation Work Flow 
+job1 -> test -> fetch from develop branch
+job2 -> prod -> fetch from master branch
+job3 -> j1 trigger j2
+-------------------------------------------
+
+Job creation workflow
+1) New Item create enter job1 (freestyle project)
+2) Restrict where this project to run on dev vm
+3) Source code management select Git and copy and paste https URL of your repository
+4) Branches to build in Branch specifier mention */develop
+5) then save and build the job
+if build successful my vm gets new folder with jenkins/workspace/job1 name which has files respective to my particular job
+
+Github hook trigger - enable to get triggers enabled for webhook
+then in repo go to webhooks payload URL : your jenkins url:8080/github-webhook/  (Add webhook)
+
+#####################################################################################################
+
 STEP4: Clone Git repo with master to have website files from git. Git repo address: https://github.com/asyedabdul/website
 
 Login to master EC2 and run following
