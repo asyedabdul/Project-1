@@ -130,17 +130,17 @@ Note: use internal ips of the servers while adding nodes in Jenkins console. ope
                    	  Kind: SSH username with private key
 		    	 username: username of slave machine do whoami get username "ubuntu" 
 			Private Key: copy and paste .pem file contents into the box below.
-     note: select credentials in dropdown once created. 
-			
+
+     Note: select credentials in dropdown once created. 
+		
 ##############################################################################################
 STEP4: Create new Git Repo
 1) login to Git hub account and create new repo with two branches main and develop.
 2) create a txt file with name main.txt with text "This is main.txt created for main branch"
 2) Create a txt file with name develop.txt with text "This is develop.txt created in develop branch"
 
-LEARN ABOUT MERGING DEVELOP AND MAIN BRANCHES AS NEEDED AT LATER SECTIONS.
 #############################################################################################
-STEP5: PIPELINE creation Work Flow 
+STEP5: PIPELINE creation Work Flow in Jenkins 
 job1 -> test -> fetch from develop branch
 job2 -> prod -> fetch from master branch
 job3 -> j1 trigger j2
@@ -156,7 +156,7 @@ if build successful my vm gets new folder with jenkins/workspace/job1 name which
 
 #################################################################################################
 
-STEP6 : CREATING WEBHOOK
+STEP6 : CREATING WEBHOOK for auto deployments after code commit
 1) Select Github hook trigger - enable to get triggers enabled for webhook both in Jenkins.
 2)  in Git hub repo go to repo and settings and webhooks on left hand and in webhook payload URL : copy paste your jenkins url:8080/github-webhook/  (# then Add webhook)
 
