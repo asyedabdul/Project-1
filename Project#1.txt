@@ -95,7 +95,7 @@ sudo apt-get install docker.io -y
 - Open Jenkins dashboard using master VM public ip:8080 port like mastervmpublicip:8080  (open this port on security group for master vm before doing this)
 	$ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
-
+BELOW SECTION IS ONLY IF YOU HAVE AN ISSUE, IF NOT ISSUES MOVE TO STEP3
 ################################################################################################################################
 NOTE: If you have any issues opening Jenkins dashboard some troubleshoot below or else NOT needed.
   
